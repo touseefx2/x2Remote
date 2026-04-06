@@ -56,7 +56,7 @@ const createStyles = (colors: Theme, topInset: number) =>
     },
     title: {
       fontFamily: fonts.fontSemiBold,
-      fontSize: fontSize.size18,
+      fontSize: fontSize.size19,
       color: colors.text,
     },
   });

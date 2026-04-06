@@ -154,8 +154,7 @@ const createStyles = (colors: Theme) =>
     row: {
       flexDirection: "row",
       alignItems: "center",
-      gap: moderateWidthScale(8),
-      marginEnd: moderateWidthScale(8),
+      gap: moderateWidthScale(12),
     },
     iconButton: {
       width: iconScale(34),
@@ -186,17 +185,16 @@ const createStyles = (colors: Theme) =>
       gap: moderateWidthScale(10),
     },
     flag: {
-      fontSize: fontSize.size18,
-      lineHeight: fontSize.size18 * 1.2,
+      fontSize: fontSize.size16,
+      lineHeight: fontSize.size16 * 1.2,
     },
     languageTextBlock: {
       flex: 1,
-      gap: moderateHeightScale(2),
     },
     languageNativeText: {
       color: colors.text,
       fontFamily: fonts.fontSemiBold,
-      fontSize: fontSize.size16,
+      fontSize: fontSize.size14,
     },
     languageEnglishText: {
       color: colors.text,

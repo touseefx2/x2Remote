@@ -45,12 +45,12 @@ const createStyles = (colors: Theme) =>
     },
     title: {
       fontFamily: fonts.fontBold,
-      fontSize: fontSize.size24,
+      fontSize: fontSize.size20,
       color: colors.text,
     },
     subtitle: {
       fontFamily: fonts.fontMedium,
-      fontSize: fontSize.size14,
+      fontSize: fontSize.size12,
       color: colors.text,
       opacity: 0.85,
     },
