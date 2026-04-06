@@ -23,10 +23,10 @@ export function HeaderControls() {
   const { language, setLanguage, labelFor, isRTL } = useI18n();
   const controlIconSize = iconScale(20);
 
-  const styles = useMemo(() => createStyles(colors, isRTL), [colors, isRTL]);
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   const onSelectLanguage = (nextLanguage: AppLanguage) => {
-    setLanguage(nextLanguage);
+    void setLanguage(nextLanguage);
   };
 
   const onSelectTheme = (nextTheme: ThemeName) => {
@@ -67,7 +67,7 @@ export function HeaderControls() {
                 <Text
                   style={[
                     styles.optionText,
-                    isRTL && styles.optionTextRtl,
+                    // isRTL && styles.optionTextRtl,
                     selected && styles.optionTextSelected,
                   ]}
                 >
@@ -111,7 +111,7 @@ export function HeaderControls() {
                 <Text
                   style={[
                     styles.optionText,
-                    isRTL && styles.optionTextRtl,
+                    // isRTL && styles.optionTextRtl,
                     selected && styles.optionTextSelected,
                   ]}
                 >
@@ -127,7 +127,7 @@ export function HeaderControls() {
   );
 }
 
-const createStyles = (colors: Theme, isRTL: boolean) =>
+const createStyles = (colors: Theme) =>
   StyleSheet.create({
     row: {
       flexDirection: "row",

@@ -17,7 +17,7 @@ void SplashScreen.preventAutoHideAsync();
 function AppNavigator() {
   const [fontsLoaded] = useFonts(Font);
   const { colors, mode, hydrated: themeHydrated } = useAppTheme();
-  const { hydrated: languageHydrated } = useI18n();
+  const { hydrated: languageHydrated, isRTL } = useI18n();
   const isReady = fontsLoaded && themeHydrated && languageHydrated;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function AppNavigator() {
   if (!isReady) return null;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, direction: isRTL ? "rtl" : "ltr" }}>
       <StatusBar style={mode === "dark" ? "light" : "dark"} />
       <CustomHeader />
       <Stack

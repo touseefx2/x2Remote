@@ -1,4 +1,10 @@
+import {
+  languageLabels,
+  translations,
+  type AppLanguage,
+} from "@/src/i18n/translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Updates from "expo-updates";
 import {
   createContext,
   useCallback,
@@ -9,11 +15,6 @@ import {
   type ReactNode,
 } from "react";
 import { I18nManager, Platform } from "react-native";
-import {
-  languageLabels,
-  translations,
-  type AppLanguage,
-} from "@/src/i18n/translations";
 
 type TranslationKey = keyof (typeof translations)["en"];
 
@@ -21,7 +22,7 @@ type I18nContextValue = {
   language: AppLanguage;
   hydrated: boolean;
   isRTL: boolean;
-  setLanguage: (language: AppLanguage) => void;
+  setLanguage: (language: AppLanguage) => Promise<void>;
   t: (key: TranslationKey) => string;
   labelFor: (language: AppLanguage) => string;
 };
@@ -33,6 +34,16 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<AppLanguage>("en");
   const [hydrated, setHydrated] = useState(false);
   const getIsRTL = (lang: AppLanguage): boolean => lang === "ur";
+  const applyLanguageDirection = useCallback((lang: AppLanguage): boolean => {
+    if (Platform.OS === "web") return false;
+
+    const wantRTL = getIsRTL(lang);
+    if (I18nManager.isRTL === wantRTL) return false;
+
+    I18nManager.allowRTL(wantRTL);
+    I18nManager.forceRTL(wantRTL);
+    return true;
+  }, []);
 
   useEffect(() => {
     const hydrate = async () => {
@@ -40,13 +51,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
         const stored = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
         if (stored === "en" || stored === "ur" || stored === "es") {
           setLanguage(stored);
-          if (Platform.OS !== "web") {
-            const wantRTL = getIsRTL(stored);
-            if (I18nManager.isRTL !== wantRTL) {
-              I18nManager.allowRTL(wantRTL);
-              I18nManager.forceRTL(wantRTL);
-            }
-          }
+          applyLanguageDirection(stored);
         }
       } finally {
         setHydrated(true);
@@ -54,24 +59,31 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     };
 
     void hydrate();
-  }, []);
+  }, [applyLanguageDirection]);
 
   useEffect(() => {
     if (!hydrated) return;
     void AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);
   }, [hydrated, language]);
 
-  const setLanguageWithDirection = useCallback((nextLanguage: AppLanguage) => {
-    setLanguage(nextLanguage);
+  const setLanguageWithDirection = useCallback(
+    async (nextLanguage: AppLanguage) => {
+      if (nextLanguage === language) return;
 
-    if (Platform.OS === "web") return;
+      setLanguage(nextLanguage);
+      await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage);
 
-    const nextRTL = getIsRTL(nextLanguage);
-    if (I18nManager.isRTL !== nextRTL) {
-      I18nManager.allowRTL(nextRTL);
-      I18nManager.forceRTL(nextRTL);
-    }
-  }, []);
+      const directionChanged = applyLanguageDirection(nextLanguage);
+      if (directionChanged) {
+        try {
+          await Updates.reloadAsync();
+        } catch {
+          // Keep language persisted even if runtime reload is unavailable.
+        }
+      }
+    },
+    [applyLanguageDirection, language],
+  );
 
   const value = useMemo<I18nContextValue>(() => {
     return {
