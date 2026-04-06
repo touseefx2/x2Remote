@@ -19,15 +19,6 @@ export const Font = {
 };
 
 export const fontSize = Object.freeze({
-  size1: fs(1),
-  size2: fs(2),
-  size3: fs(3),
-  size4: fs(4),
-  size5: fs(5),
-  size6: fs(6),
-  size7: fs(7),
-  size8: fs(8),
-  size9: fs(9),
   size10: fs(10),
   size11: fs(11),
   size12: fs(12),

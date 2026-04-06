@@ -1,0 +1,24 @@
+---
+description: Enforce responsive scaling helpers from dimensions config
+globs: **/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Responsive Dimensions Rules
+
+- Never use hardcoded UI sizing for layout, text, or icons (for example `fontSize: 14`, `width: 100`).
+- For horizontal layout spacing/sizing, use `widthScale(...)`.
+- For vertical spacing/sizing, use `heightScale(...)`.
+- For softer component sizing (buttons/cards/radius/padding), use `moderateWidthScale(...)` or `moderateHeightScale(...)`.
+- For typography, always use `fontScale(...)` or `fontSize.size*` from `src/config/fonts.ts`.
+- For icon sizes, always use `iconScale(...)`.
+- For tablet/TV behavior, use `responsiveMetrics` flags (`isTablet`, `isLargeTablet`, `isTV`) instead of device-specific magic numbers.
+
+## Example
+
+```tsx
+const styles = StyleSheet.create({
+  title: { fontSize: fontScale(16) },
+  card: { padding: moderateWidthScale(12), borderRadius: moderateWidthScale(10) },
+});
+```

@@ -7,25 +7,12 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { Text, TextInput, View } from "react-native";
+import { View } from "react-native";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { MenuProvider } from "react-native-popup-menu";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 void SplashScreen.preventAutoHideAsync();
-
-const AppText = Text as typeof Text & {
-  defaultProps?: { allowFontScaling?: boolean };
-};
-const AppTextInput = TextInput as typeof TextInput & {
-  defaultProps?: { allowFontScaling?: boolean };
-};
-
-AppText.defaultProps = AppText.defaultProps ?? {};
-AppText.defaultProps.allowFontScaling = false;
-
-AppTextInput.defaultProps = AppTextInput.defaultProps ?? {};
-AppTextInput.defaultProps.allowFontScaling = false;
 
 function AppNavigator() {
   const [fontsLoaded] = useFonts(Font);

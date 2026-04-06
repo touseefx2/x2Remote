@@ -38,7 +38,7 @@ const createStyles = (colors: Theme) =>
       paddingVertical: moderateHeightScale(28),
       paddingHorizontal: moderateWidthScale(20),
       borderRadius: moderateWidthScale(16),
-      borderWidth: 1,
+      borderWidth: StyleSheet.hairlineWidth,
       borderColor: colors.borderLine,
       backgroundColor: colors.card,
       gap: moderateHeightScale(10),

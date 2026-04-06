@@ -1,4 +1,8 @@
-import { iconScale, moderateWidthScale } from "@/src/config/dimensions";
+import {
+  iconScale,
+  moderateHeightScale,
+  moderateWidthScale,
+} from "@/src/config/dimensions";
 import { fontSize, fonts } from "@/src/config/fonts";
 import { useI18n } from "@/src/i18n/I18nContext";
 import { type AppLanguage } from "@/src/i18n/translations";
@@ -138,7 +142,7 @@ const createStyles = (colors: Theme, isRTL: boolean) =>
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: colors.card,
-      borderWidth: 1,
+      borderWidth: StyleSheet.hairlineWidth,
       borderColor: colors.borderLine,
     },
     dropdown: {
@@ -148,10 +152,10 @@ const createStyles = (colors: Theme, isRTL: boolean) =>
       borderColor: colors.borderLine,
       backgroundColor: colors.card,
       overflow: "hidden",
-      marginTop: moderateWidthScale(8),
+      marginTop: moderateHeightScale(8),
     },
     option: {
-      paddingVertical: moderateWidthScale(10),
+      paddingVertical: moderateHeightScale(10),
       paddingHorizontal: moderateWidthScale(12),
     },
     optionSelectedRow: {
@@ -167,6 +171,6 @@ const createStyles = (colors: Theme, isRTL: boolean) =>
       writingDirection: "rtl",
     },
     optionTextSelected: {
-      color: "#FFFFFF",
+      color: colors.textOnPrimary,
     },
   });

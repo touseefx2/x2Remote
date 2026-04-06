@@ -1,0 +1,23 @@
+---
+description: Enforce screen file splitting and reusable modal components
+globs: **/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Structure And Reuse Rules
+
+- If a screen file grows beyond 300 lines, split it into a dedicated folder:
+  - `app/<screen>/index.tsx` for logic/JSX
+  - `app/<screen>/styles.ts` for `StyleSheet` definitions
+- Keep screen logic lean; move reusable UI blocks into separate components.
+- Any modal that can be reused must be extracted into `src/components/` (or a subfolder there), not duplicated inside screens.
+- Reused components must be prop-driven and imported wherever needed.
+- Avoid copy-paste UI across screens; extract once and reuse.
+
+## Example Structure
+
+```txt
+app/profile/index.tsx
+app/profile/styles.ts
+src/components/modals/ConfirmActionModal.tsx
+```
