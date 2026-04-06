@@ -5,15 +5,17 @@ const fs = (size: number): number => fontScale(size);
 export const fonts = {
   fontRegular: "fontRegular",
   fontMedium: "fontMedium",
+  fontSemiBold: "fontSemiBold",
   fontBold: "fontBold",
   fontExtraBold: "fontExtraBold",
 } as const;
 
 export const Font = {
-  fontRegular: require("@/assets/fonts/FormaDJRDeck-Regular-Testing.ttf"),
-  fontMedium: require("@/assets/fonts/FormaDJRDisplay-Medium-Testing.ttf"),
-  fontBold: require("@/assets/fonts/FormaDJRText-Bold-Testing.ttf"),
-  fontExtraBold: require("@/assets/fonts/FormaDJRText-ExtraBold-Testing.ttf"),
+  fontRegular: require("@/assets/fonts/Poppins-Regular.ttf"),
+  fontMedium: require("@/assets/fonts/Poppins-Medium.ttf"),
+  fontSemiBold: require("@/assets/fonts/Poppins-SemiBold.ttf"),
+  fontBold: require("@/assets/fonts/Poppins-Bold.ttf"),
+  fontExtraBold: require("@/assets/fonts/Poppins-ExtraBold.ttf"),
 };
 
 export const fontSize = Object.freeze({

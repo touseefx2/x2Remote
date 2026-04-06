@@ -55,7 +55,7 @@ const createStyles = (colors: Theme, topInset: number) =>
       gap: moderateWidthScale(8),
     },
     title: {
-      fontFamily: fonts.fontBold,
+      fontFamily: fonts.fontSemiBold,
       fontSize: fontSize.size18,
       color: colors.text,
     },
