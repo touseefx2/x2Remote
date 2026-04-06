@@ -18,9 +18,20 @@ import {
   MenuTrigger,
 } from "react-native-popup-menu";
 
+const languageMenuItems: ReadonlyArray<{
+  code: AppLanguage;
+  flag: string;
+  nativeName: string;
+  englishName: string;
+}> = [
+  { code: "en", flag: "🇬🇧", nativeName: "English", englishName: "English" },
+  { code: "ur", flag: "🇵🇰", nativeName: "اردو", englishName: "Urdu" },
+  { code: "es", flag: "🇪🇸", nativeName: "Espanol", englishName: "Spanish" },
+];
+
 export function HeaderControls() {
   const { colors, themeName, setTheme } = useAppTheme();
-  const { language, setLanguage, labelFor, isRTL } = useI18n();
+  const { language, setLanguage } = useI18n();
   const controlIconSize = iconScale(20);
 
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -51,12 +62,12 @@ export function HeaderControls() {
           </View>
         </MenuTrigger>
         <MenuOptions customStyles={{ optionsContainer: styles.dropdown }}>
-          {(["en", "ur", "es"] as const).map((lang) => {
-            const selected = lang === language;
+          {languageMenuItems.map((item) => {
+            const selected = item.code === language;
             return (
               <MenuOption
-                key={lang}
-                onSelect={() => onSelectLanguage(lang)}
+                key={item.code}
+                onSelect={() => onSelectLanguage(item.code)}
                 customStyles={{
                   optionWrapper: [
                     styles.option,
@@ -64,15 +75,27 @@ export function HeaderControls() {
                   ],
                 }}
               >
-                <Text
-                  style={[
-                    styles.optionText,
-                    // isRTL && styles.optionTextRtl,
-                    selected && styles.optionTextSelected,
-                  ]}
-                >
-                  {labelFor(lang)}
-                </Text>
+                <View style={styles.languageRow}>
+                  <Text style={styles.flag}>{item.flag}</Text>
+                  <View style={styles.languageTextBlock}>
+                    <Text
+                      style={[
+                        styles.languageNativeText,
+                        selected && styles.optionTextSelected,
+                      ]}
+                    >
+                      {item.nativeName}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.languageEnglishText,
+                        selected && styles.optionTextSelected,
+                      ]}
+                    >
+                      {item.englishName}
+                    </Text>
+                  </View>
+                </View>
               </MenuOption>
             );
           })}
@@ -111,7 +134,6 @@ export function HeaderControls() {
                 <Text
                   style={[
                     styles.optionText,
-                    // isRTL && styles.optionTextRtl,
                     selected && styles.optionTextSelected,
                   ]}
                 >
@@ -158,6 +180,30 @@ const createStyles = (colors: Theme) =>
       paddingVertical: moderateHeightScale(10),
       paddingHorizontal: moderateWidthScale(12),
     },
+    languageRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: moderateWidthScale(10),
+    },
+    flag: {
+      fontSize: fontSize.size18,
+      lineHeight: fontSize.size18 * 1.2,
+    },
+    languageTextBlock: {
+      flex: 1,
+      gap: moderateHeightScale(2),
+    },
+    languageNativeText: {
+      color: colors.text,
+      fontFamily: fonts.fontSemiBold,
+      fontSize: fontSize.size16,
+    },
+    languageEnglishText: {
+      color: colors.text,
+      opacity: 0.7,
+      fontFamily: fonts.fontRegular,
+      fontSize: fontSize.size14,
+    },
     optionSelectedRow: {
       backgroundColor: colors.primary,
     },
@@ -165,10 +211,6 @@ const createStyles = (colors: Theme) =>
       color: colors.text,
       fontFamily: fonts.fontMedium,
       fontSize: fontSize.size14,
-    },
-    optionTextRtl: {
-      textAlign: "right",
-      writingDirection: "rtl",
     },
     optionTextSelected: {
       color: colors.textOnPrimary,
