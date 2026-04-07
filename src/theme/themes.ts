@@ -9,7 +9,7 @@ export type Theme = {
   shadow: string;
 };
 
-export const themes: Record<"light" | "dark" | "blue", Theme> = {
+export const themes: Record<"light" | "dark" | "emerald", Theme> = {
   light: {
     background: "#FFFFFF",
     text: "#111111",
@@ -21,23 +21,23 @@ export const themes: Record<"light" | "dark" | "blue", Theme> = {
     shadow: "#000000",
   },
   dark: {
-    background: "#0F172A",
+    background: "#000000",
     text: "#F8FAFC",
     textOnPrimary: "#FFFFFF",
     primary: "#60A5FA",
-    borderLine: "#334155",
+    borderLine: "#1F2937",
     icon: "#F8FAFC",
-    card: "#111827",
+    card: "#0A0A0A",
     shadow: "#000000",
   },
-  blue: {
-    background: "#EFF6FF",
-    text: "#0B1F44",
+  emerald: {
+    background: "#062C22",
+    text: "#E6FFF7",
     textOnPrimary: "#FFFFFF",
-    primary: "#1D4ED8",
-    borderLine: "#93C5FD",
-    icon: "#0B1F44",
-    card: "#DBEAFE",
+    primary: "#0F766E",
+    borderLine: "#115E59",
+    icon: "#E6FFF7",
+    card: "#0A3B2F",
     shadow: "#000000",
   },
 };

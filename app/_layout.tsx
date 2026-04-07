@@ -30,7 +30,7 @@ function AppNavigator() {
 
   return (
     <View style={{ flex: 1, direction: isRTL ? "rtl" : "ltr" }}>
-      <StatusBar style={mode === "dark" ? "light" : "dark"} />
+      <StatusBar style={mode === "dark" || mode === "emerald" ? "light" : "dark"} />
       <CustomHeader />
       <Stack
         screenOptions={{

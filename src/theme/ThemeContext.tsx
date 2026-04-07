@@ -1,3 +1,4 @@
+import { themes, type Theme, type ThemeName } from "@/src/theme/themes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createContext,
@@ -7,9 +8,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { themes, type Theme, type ThemeName } from "@/src/theme/themes";
 
-type ThemeMode = "light" | "dark";
+type ThemeMode = "light" | "dark" | "emerald";
 
 type ThemeContextValue = {
   themeName: ThemeName;
@@ -31,7 +31,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const hydrate = async () => {
       try {
         const stored = await AsyncStorage.getItem(THEME_STORAGE_KEY);
-        if (stored === "light" || stored === "dark" || stored === "blue") {
+        if (stored === "light" || stored === "dark" || stored === "emerald") {
           setThemeName(stored);
         }
       } finally {
@@ -48,7 +48,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [hydrated, themeName]);
 
   const value = useMemo<ThemeContextValue>(() => {
-    const mode: ThemeMode = themeName === "dark" ? "dark" : "light";
+    const mode: ThemeMode =
+      themeName === "dark"
+        ? "dark"
+        : themeName === "emerald"
+          ? "emerald"
+          : "light";
 
     return {
       themeName,
@@ -56,11 +61,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       colors: themes[themeName],
       hydrated,
       setTheme: setThemeName,
-      toggleMode: () => setThemeName((prev) => (prev === "dark" ? "light" : "dark")),
+      toggleMode: () =>
+        setThemeName((prev) => (prev === "dark" ? "light" : "dark")),
     };
   }, [hydrated, themeName]);
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
 }
 
 export const useAppTheme = (): ThemeContextValue => {

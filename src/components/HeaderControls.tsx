@@ -29,6 +29,16 @@ const languageMenuItems: ReadonlyArray<{
   { code: "es", flag: "🇪🇸", nativeName: "Espanol", englishName: "Spanish" },
 ];
 
+const themeMenuItems: ReadonlyArray<{
+  id: ThemeName;
+  label: string;
+  swatch: string;
+}> = [
+  { id: "light", label: "Light", swatch: "#FFFFFF" },
+  { id: "dark", label: "Dark", swatch: "#000000" },
+  { id: "emerald", label: "Emerald", swatch: "#0F766E" },
+];
+
 export function HeaderControls() {
   const { colors, themeName, setTheme } = useAppTheme();
   const { language, setLanguage } = useI18n();
@@ -118,12 +128,12 @@ export function HeaderControls() {
           </View>
         </MenuTrigger>
         <MenuOptions customStyles={{ optionsContainer: styles.dropdown }}>
-          {(["light", "dark", "blue"] as const).map((themeOption) => {
-            const selected = themeOption === themeName;
+          {themeMenuItems.map((themeOption) => {
+            const selected = themeOption.id === themeName;
             return (
               <MenuOption
-                key={themeOption}
-                onSelect={() => onSelectTheme(themeOption)}
+                key={themeOption.id}
+                onSelect={() => onSelectTheme(themeOption.id)}
                 customStyles={{
                   optionWrapper: [
                     styles.option,
@@ -131,15 +141,22 @@ export function HeaderControls() {
                   ],
                 }}
               >
-                <Text
-                  style={[
-                    styles.optionText,
-                    selected && styles.optionTextSelected,
-                  ]}
-                >
-                  {themeOption[0].toUpperCase()}
-                  {themeOption.slice(1)}
-                </Text>
+                <View style={styles.themeRow}>
+                  <View
+                    style={[
+                      styles.themeSwatch,
+                      { backgroundColor: themeOption.swatch },
+                    ]}
+                  />
+                  <Text
+                    style={[
+                      styles.optionText,
+                      selected && styles.optionTextSelected,
+                    ]}
+                  >
+                    {themeOption.label}
+                  </Text>
+                </View>
               </MenuOption>
             );
           })}
@@ -209,6 +226,18 @@ const createStyles = (colors: Theme) =>
       color: colors.text,
       fontFamily: fonts.fontMedium,
       fontSize: fontSize.size14,
+    },
+    themeRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: moderateWidthScale(10),
+    },
+    themeSwatch: {
+      width: moderateWidthScale(12),
+      height: moderateWidthScale(12),
+      borderRadius: moderateWidthScale(6),
+      borderWidth: 1,
+      borderColor: colors.borderLine,
     },
     optionTextSelected: {
       color: colors.textOnPrimary,
