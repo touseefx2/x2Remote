@@ -1,13 +1,23 @@
 import { ACControlPanel } from "@/src/components/ACControlPanel";
 import { RemoteButton } from "@/src/components/RemoteButton";
-import { moderateHeightScale, moderateWidthScale } from "@/src/config/dimensions";
-import { fontSize, fonts } from "@/src/config/fonts";
+import {
+  moderateHeightScale,
+  moderateWidthScale,
+} from "@/src/config/dimensions";
+import { fonts, fontSize } from "@/src/config/fonts";
 import { useI18n } from "@/src/i18n/I18nContext";
 import { AC_BRANDS, irService, TV_BRANDS } from "@/src/services/irService";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import { useEffect, useMemo, useState } from "react";
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export function IRRemoteScreen() {
   const { t } = useI18n();
@@ -58,7 +68,9 @@ export function IRRemoteScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>{t("irUnavailableTitle")}</Text>
-          <Text style={styles.stateSubtitle}>{errorText ?? t("irUnavailable")}</Text>
+          <Text style={styles.stateSubtitle}>
+            {errorText ?? t("irUnavailable")}
+          </Text>
           <Text style={styles.stateSubtitle}>{t("irIssueReason")}</Text>
         </View>
         <View style={styles.card}>
@@ -87,18 +99,36 @@ export function IRRemoteScreen() {
             <Pressable
               key={item.id}
               onPress={() => void onSelectBrand("tv", item.id)}
-              style={[styles.brandChip, tvBrand === item.id ? styles.brandChipActive : undefined]}
+              style={[
+                styles.brandChip,
+                tvBrand === item.id ? styles.brandChipActive : undefined,
+              ]}
             >
               <Text style={styles.brandChipLabel}>{item.name}</Text>
             </Pressable>
           ))}
         </View>
         <View style={styles.controlsRow}>
-          <RemoteButton label={t("power") as string} onPress={() => void irService.sendTvCommand("power")} />
-          <RemoteButton label={t("volumeUp") as string} onPress={() => void irService.sendTvCommand("volumeUp")} />
-          <RemoteButton label={t("volumeDown") as string} onPress={() => void irService.sendTvCommand("volumeDown")} />
-          <RemoteButton label={t("channelUp") as string} onPress={() => void irService.sendTvCommand("channelUp")} />
-          <RemoteButton label={t("channelDown") as string} onPress={() => void irService.sendTvCommand("channelDown")} />
+          <RemoteButton
+            label={t("power") as string}
+            onPress={() => void irService.sendTvCommand("power")}
+          />
+          <RemoteButton
+            label={t("volumeUp") as string}
+            onPress={() => void irService.sendTvCommand("volumeUp")}
+          />
+          <RemoteButton
+            label={t("volumeDown") as string}
+            onPress={() => void irService.sendTvCommand("volumeDown")}
+          />
+          <RemoteButton
+            label={t("channelUp") as string}
+            onPress={() => void irService.sendTvCommand("channelUp")}
+          />
+          <RemoteButton
+            label={t("channelDown") as string}
+            onPress={() => void irService.sendTvCommand("channelDown")}
+          />
         </View>
       </View>
 
@@ -109,7 +139,10 @@ export function IRRemoteScreen() {
             <Pressable
               key={item.id}
               onPress={() => void onSelectBrand("ac", item.id)}
-              style={[styles.brandChip, acBrand === item.id ? styles.brandChipActive : undefined]}
+              style={[
+                styles.brandChip,
+                acBrand === item.id ? styles.brandChipActive : undefined,
+              ]}
             >
               <Text style={styles.brandChipLabel}>{item.name}</Text>
             </Pressable>
