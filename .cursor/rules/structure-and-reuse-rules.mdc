@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Structure And Reuse Rules
 
-- If a screen file grows beyond 300 lines, split it into a dedicated folder:
+- If a screen file grows beyond 400 lines, split it into a dedicated folder:
   - `app/<screen>/index.tsx` for logic/JSX
   - `app/<screen>/styles.ts` for `StyleSheet` definitions
 - Keep screen logic lean; move reusable UI blocks into separate components.
