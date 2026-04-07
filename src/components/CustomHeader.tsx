@@ -8,8 +8,9 @@ import { useI18n } from "@/src/i18n/I18nContext";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import { useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { IMAGES } from "../config/images";
 
 type CustomHeaderProps = {
   title?: string;
@@ -24,14 +25,10 @@ export function CustomHeader({ title }: CustomHeaderProps) {
     [colors, insets.top],
   );
 
-  const displayTitle = title ?? t("screenTitle");
-
   return (
     <View style={styles.wrapper} accessibilityRole="header">
       <View style={styles.inner}>
-        <Text style={styles.title} numberOfLines={1}>
-          {displayTitle}
-        </Text>
+        <Image source={IMAGES.headerLogo} style={styles.logo} />
         <HeaderControls />
       </View>
     </View>
@@ -53,6 +50,10 @@ const createStyles = (colors: Theme, topInset: number) =>
       paddingHorizontal: moderateWidthScale(12),
       paddingVertical: moderateHeightScale(10),
       gap: moderateWidthScale(8),
+    },
+    logo: {
+      width: moderateWidthScale(30),
+      height: moderateHeightScale(30),
     },
     title: {
       fontFamily: fonts.fontSemiBold,
