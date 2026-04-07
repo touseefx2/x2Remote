@@ -3,25 +3,16 @@ import {
   moderateWidthScale,
 } from "@/src/config/dimensions";
 import { fontSize, fonts } from "@/src/config/fonts";
-import { useI18n } from "@/src/i18n/I18nContext";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import { useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function Index() {
-  const { t } = useI18n();
   const { colors } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.title}>{t("screenTitle")}</Text>
-        <Text style={styles.subtitle}>{t("screenSubtitle")}</Text>
-      </View>
-    </View>
-  );
+  return <View style={styles.container}></View>;
 }
 
 const createStyles = (colors: Theme) =>

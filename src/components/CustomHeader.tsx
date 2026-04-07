@@ -24,7 +24,7 @@ export function CustomHeader({ title }: CustomHeaderProps) {
     [colors, insets.top],
   );
 
-  const displayTitle = title ?? t("screenTitle");
+  const displayTitle = title ?? t("mainHeaderTitle");
 
   return (
     <View style={styles.wrapper} accessibilityRole="header">
