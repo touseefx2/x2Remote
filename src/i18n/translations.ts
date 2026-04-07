@@ -4,8 +4,7 @@ import ur from "@/src/i18n/locales/ur.json";
 
 export type AppLanguage = "en" | "ur" | "es";
 
-type TranslationKeys = "mainHeaderTitle" | "language" | "theme";
-type TranslationMap = Record<TranslationKeys, string>;
+type TranslationMap = typeof en;
 
 export const languageLabels: Record<AppLanguage, string> = {
   en: "English",
