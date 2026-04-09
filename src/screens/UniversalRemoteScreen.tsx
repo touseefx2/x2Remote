@@ -1,3 +1,4 @@
+import { Text } from "@/src/components/AppText";
 import { ACControlPanel } from "@/src/components/ACControlPanel";
 import { RemoteButton } from "@/src/components/RemoteButton";
 import { moderateHeightScale, moderateWidthScale } from "@/src/config/dimensions";
@@ -9,7 +10,7 @@ import { smartDeviceService } from "@/src/services/smartDeviceService";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import { useEffect, useMemo, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export function UniversalRemoteScreen() {
   const { t } = useI18n();

@@ -1,9 +1,10 @@
+import { Text } from "@/src/components/AppText";
 import { moderateHeightScale, moderateWidthScale } from "@/src/config/dimensions";
 import { fontSize, fonts } from "@/src/config/fonts";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import { useMemo } from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 type RemoteButtonProps = {
   label: string;

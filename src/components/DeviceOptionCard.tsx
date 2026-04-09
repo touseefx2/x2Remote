@@ -1,3 +1,4 @@
+import { Text } from "@/src/components/AppText";
 import { moderateHeightScale, moderateWidthScale } from "@/src/config/dimensions";
 import { fontSize, fonts } from "@/src/config/fonts";
 import { useI18n } from "@/src/i18n/I18nContext";
@@ -5,7 +6,7 @@ import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import type { SmartDevice } from "@/src/types/remote";
 import { useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 type DeviceOptionCardProps = {
   device: SmartDevice;

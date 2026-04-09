@@ -1,3 +1,4 @@
+import { Text } from "@/src/components/AppText";
 import { DeviceOptionCard } from "@/src/components/DeviceOptionCard";
 import { RemoteButton } from "@/src/components/RemoteButton";
 import { moderateHeightScale, moderateWidthScale } from "@/src/config/dimensions";
@@ -9,7 +10,7 @@ import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import type { SmartDevice } from "@/src/types/remote";
 import { useMemo, useState } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 
 export function SmartDeviceScreen() {
   const { t } = useI18n();

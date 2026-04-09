@@ -1,3 +1,4 @@
+import { Text } from "@/src/components/AppText";
 import {
   iconScale,
   moderateHeightScale,
@@ -10,7 +11,7 @@ import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme, type ThemeName } from "@/src/theme/themes";
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   Menu,
   MenuOption,

@@ -1,3 +1,4 @@
+import { Text } from "@/src/components/AppText";
 import { IRRemoteScreen } from "@/src/screens/IRRemoteScreen";
 import { SmartDeviceScreen } from "@/src/screens/SmartDeviceScreen";
 import { UniversalRemoteScreen } from "@/src/screens/UniversalRemoteScreen";
@@ -9,7 +10,7 @@ import { useI18n } from "@/src/i18n/I18nContext";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 export default function Index() {
   const { t } = useI18n();

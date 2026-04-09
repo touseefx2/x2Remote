@@ -1,3 +1,4 @@
+import { Text } from "@/src/components/AppText";
 import { moderateHeightScale, moderateWidthScale } from "@/src/config/dimensions";
 import { fontSize, fonts } from "@/src/config/fonts";
 import { useI18n } from "@/src/i18n/I18nContext";
@@ -6,7 +7,7 @@ import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import type { ACMode, FanSpeed } from "@/src/types/remote";
 import { useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 type ACControlPanelProps = {
   onPower: () => void;

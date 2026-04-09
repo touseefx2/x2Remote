@@ -1,4 +1,5 @@
 import { ACControlPanel } from "@/src/components/ACControlPanel";
+import { Text } from "@/src/components/AppText";
 import { RemoteButton } from "@/src/components/RemoteButton";
 import {
   moderateHeightScale,
@@ -15,7 +16,6 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 
@@ -74,7 +74,9 @@ export function IRRemoteScreen() {
           <Text style={styles.stateSubtitle}>{t("irIssueReason")}</Text>
         </View>
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>{t("howToUseIrTitle")}</Text>
+          <Text style={styles.sectionTitle}>
+            {t("howToUseIrTitle")}
+          </Text>
           <Text style={styles.stateSubtitle}>{t("irInstructionStep1")}</Text>
           <Text style={styles.stateSubtitle}>{t("irInstructionStep2")}</Text>
           <Text style={styles.stateSubtitle}>{t("irInstructionStep3")}</Text>
