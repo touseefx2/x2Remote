@@ -47,15 +47,15 @@ function AppNavigator() {
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <KeyboardProvider>
-        <ThemeProvider>
-          <I18nProvider>
+      <I18nProvider>
+        <KeyboardProvider>
+          <ThemeProvider>
             <MenuProvider>
               <AppNavigator />
             </MenuProvider>
-          </I18nProvider>
-        </ThemeProvider>
-      </KeyboardProvider>
+          </ThemeProvider>
+        </KeyboardProvider>
+      </I18nProvider>
     </SafeAreaProvider>
   );
 }

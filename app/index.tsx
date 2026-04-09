@@ -1,3 +1,4 @@
+import { Text } from "@/src/components/AppText";
 import {
   moderateHeightScale,
   moderateWidthScale,
@@ -7,7 +8,7 @@ import { useI18n } from "@/src/i18n/I18nContext";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import { useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function Index() {
   const { t } = useI18n();
