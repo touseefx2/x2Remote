@@ -52,6 +52,8 @@
   "smartGuideStep3": "Step 3: After pairing, use control buttons and test YouTube/Navigation for TV.",
   "universalGuideTitle": "Universal Mode Instructions",
   "universalGuideStep1": "Universal mode gives quick controls for TV and AC from one place.",
-  "universalGuideStep2": "If IR is supported, commands are sent by IR; otherwise smart-device fallback is used.",
-  "universalGuideStep3": "Best practice: pair devices in the Smart tab first, then use Universal for daily quick actions."
+  "universalGuideStep2": "TV: tries your paired/discovered Wi‑Fi TV first (Roku, etc.), then IR if the command fails or no network TV. AC: IR only (point the phone at the AC).",
+  "universalGuideStep3": "Best practice: pair devices in the Smart tab first, choose TV/AC brands on the IR tab, then use Universal for daily quick actions.",
+  "universalIrBrandHint": "IR TV/AC commands use the brands selected on the IR Remote tab.",
+  "universalNoNetworkTv": "No smart TV saved or found on this Wi‑Fi yet—you can still use IR for TV keys if your phone has an IR blaster."
 }

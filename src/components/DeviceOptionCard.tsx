@@ -26,7 +26,9 @@ export function DeviceOptionCard({ device, onPress }: DeviceOptionCardProps) {
           {device.paired ? t("pairedLabel") : t("newLabel")}
         </Text>
       </View>
-      <Text style={styles.meta}>{`${device.type} • ${device.protocol}`}</Text>
+      <Text style={styles.meta}>
+        {`${device.type} • ${device.vendor ?? device.protocol}`}
+      </Text>
       <Text style={styles.meta}>{device.ip}</Text>
     </Pressable>
   );

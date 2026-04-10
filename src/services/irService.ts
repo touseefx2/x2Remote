@@ -1,62 +1,38 @@
+import * as ExpoIr from "expo-ir";
+import {
+  acCarrierHz,
+  acPatternForBrand,
+  tvCarrierHz,
+  tvPatternForBrand,
+  type AcIrCommand,
+  type TvIrCommand,
+} from "@/src/services/irBrandPatterns";
 import { storageService } from "@/src/services/storageService";
-import type { ACMode, DeviceBrand, FanSpeed, IRCapability } from "@/src/types/remote";
-import { NativeModules, Platform } from "react-native";
+import type { ACMode, FanSpeed, IRCapability } from "@/src/types/remote";
+import { Platform } from "react-native";
 
-type IRNativeModule = {
-  hasIrEmitter?: () => Promise<boolean>;
-  transmit?: (carrierFrequency: number, pattern: number[]) => Promise<boolean>;
-};
-
-const IR_FREQUENCY = 38000;
-const IRModule = NativeModules.IRModule as IRNativeModule | undefined;
-const USE_MOCK = !IRModule;
-
-export const TV_BRANDS: DeviceBrand[] = [
+export const TV_BRANDS = [
   { id: "samsung", name: "Samsung" },
   { id: "lg", name: "LG" },
   { id: "sony", name: "Sony" },
   { id: "haier", name: "Haier" },
   { id: "panasonic", name: "Panasonic" },
-];
+] as const;
 
-export const AC_BRANDS: DeviceBrand[] = [
+export const AC_BRANDS = [
   { id: "gree", name: "Gree" },
   { id: "haier", name: "Haier" },
   { id: "samsung", name: "Samsung" },
   { id: "lg", name: "LG" },
   { id: "daikin", name: "Daikin" },
-];
+] as const;
 
-const tvPatterns: Record<string, number[]> = {
-  power: [9000, 4500, 560, 1690],
-  volumeUp: [9000, 4500, 560, 560],
-  volumeDown: [9000, 4500, 560, 1120],
-  channelUp: [9000, 4500, 1120, 560],
-  channelDown: [9000, 4500, 1120, 1120],
-};
-
-const acPatterns: Record<string, number[]> = {
-  power: [3400, 1700, 450, 450],
-  tempUp: [3400, 1700, 450, 900],
-  tempDown: [3400, 1700, 900, 450],
-  fanSpeed: [3400, 1700, 900, 900],
-  modeCool: [3400, 1700, 450, 1350],
-  modeHeat: [3400, 1700, 1350, 450],
-  modeFan: [3400, 1700, 1350, 900],
-};
-
-const transmit = async (pattern: number[]): Promise<boolean> => {
-  if (USE_MOCK) {
-    await new Promise((resolve) => setTimeout(resolve, 120));
-    return true;
-  }
-
-  if (!IRModule?.transmit) {
+async function transmitIr(carrierHz: number, pattern: number[]): Promise<boolean> {
+  if (Platform.OS !== "android") {
     return false;
   }
-
-  return IRModule.transmit(IR_FREQUENCY, pattern);
-};
+  return ExpoIr.transmit(carrierHz, pattern);
+}
 
 export const irService = {
   async getCapability(): Promise<IRCapability> {
@@ -78,21 +54,22 @@ export const irService = {
       };
     }
 
-    if (USE_MOCK || !IRModule?.hasIrEmitter) {
+    try {
+      const has = await ExpoIr.hasIrEmitter();
       return {
-        supported: true,
+        supported: has,
+        message: has ? undefined : "This phone has no IR blaster (ConsumerIr).",
+        platform: "android",
+        mockMode: false,
+      };
+    } catch {
+      return {
+        supported: false,
+        message: "IR native module failed to load. Rebuild the app (expo run:android).",
         platform: "android",
         mockMode: true,
       };
     }
-
-    const supported = await IRModule.hasIrEmitter();
-    return {
-      supported,
-      message: supported ? undefined : "IR Blaster not available on this device.",
-      platform: "android",
-      mockMode: false,
-    };
   },
 
   async setSelectedBrand(device: "tv" | "ac", brandId: string) {
@@ -103,27 +80,35 @@ export const irService = {
     return storageService.getSelectedBrand(device);
   },
 
-  async sendTvCommand(
-    command: "power" | "volumeUp" | "volumeDown" | "channelUp" | "channelDown",
-  ) {
-    return transmit(tvPatterns[command]);
+  async sendTvCommand(command: TvIrCommand) {
+    const brand = (await storageService.getSelectedBrand("tv")) ?? "samsung";
+    const pattern = tvPatternForBrand(brand, command);
+    const hz = tvCarrierHz(brand);
+    return transmitIr(hz, pattern);
   },
 
   async sendAcPower() {
-    return transmit(acPatterns.power);
+    const brand = (await storageService.getSelectedBrand("ac")) ?? "gree";
+    const pattern = acPatternForBrand(brand, "power");
+    return transmitIr(acCarrierHz(brand), pattern);
   },
 
   async sendAcTemperature(up: boolean) {
-    return transmit(up ? acPatterns.tempUp : acPatterns.tempDown);
+    const brand = (await storageService.getSelectedBrand("ac")) ?? "gree";
+    const pattern = acPatternForBrand(brand, up ? "tempUp" : "tempDown");
+    return transmitIr(acCarrierHz(brand), pattern);
   },
 
   async sendAcMode(mode: ACMode) {
-    if (mode === "cool") return transmit(acPatterns.modeCool);
-    if (mode === "heat") return transmit(acPatterns.modeHeat);
-    return transmit(acPatterns.modeFan);
+    const brand = (await storageService.getSelectedBrand("ac")) ?? "gree";
+    const key: AcIrCommand = mode === "cool" ? "modeCool" : mode === "heat" ? "modeHeat" : "modeFan";
+    const pattern = acPatternForBrand(brand, key);
+    return transmitIr(acCarrierHz(brand), pattern);
   },
 
   async sendAcFanSpeed(_speed: FanSpeed) {
-    return transmit(acPatterns.fanSpeed);
+    const brand = (await storageService.getSelectedBrand("ac")) ?? "gree";
+    const pattern = acPatternForBrand(brand, "fanSpeed");
+    return transmitIr(acCarrierHz(brand), pattern);
   },
 };

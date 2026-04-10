@@ -52,6 +52,8 @@
   "smartGuideStep3": "Paso 3: Despues de vincular, use controles y pruebe YouTube/Navegacion en TV.",
   "universalGuideTitle": "Instrucciones modo Universal",
   "universalGuideStep1": "El modo Universal ofrece controles rapidos de TV y AC en un solo lugar.",
-  "universalGuideStep2": "Si IR esta disponible, envia por IR; si no, usa fallback de dispositivos inteligentes.",
-  "universalGuideStep3": "Recomendado: vincule dispositivos en Smart y luego use Universal para acciones diarias."
+  "universalGuideStep2": "TV: primero intenta el TV WiFi (vinculado o detectado), luego IR si falla o no hay TV en red. AC: solo IR (apunte al aire).",
+  "universalGuideStep3": "Recomendado: vincule en Smart, elija marcas en IR, y use Universal a diario.",
+  "universalIrBrandHint": "Los comandos IR usan las marcas elegidas en la pestana Control IR.",
+  "universalNoNetworkTv": "Aun no hay TV inteligente en WiFi; puede usar IR para TV si su telefono tiene emisor IR."
 }

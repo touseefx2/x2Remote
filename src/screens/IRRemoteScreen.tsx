@@ -26,8 +26,8 @@ export function IRRemoteScreen() {
   const [loading, setLoading] = useState(true);
   const [supported, setSupported] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
-  const [tvBrand, setTvBrand] = useState(TV_BRANDS[0]?.id ?? "samsung");
-  const [acBrand, setAcBrand] = useState(AC_BRANDS[0]?.id ?? "gree");
+  const [tvBrand, setTvBrand] = useState<string>(TV_BRANDS[0]?.id ?? "samsung");
+  const [acBrand, setAcBrand] = useState<string>(AC_BRANDS[0]?.id ?? "gree");
 
   useEffect(() => {
     const bootstrap = async () => {

@@ -12,6 +12,15 @@ export type DeviceBrand = {
 
 export type SmartDeviceType = "smart_tv" | "smart_ac";
 
+/** How we send LAN commands (from mDNS service / fallback detection). */
+export type SmartDeviceVendor =
+  | "roku"
+  | "chromecast"
+  | "android_tv"
+  | "airplay"
+  | "homekit_ac"
+  | "unknown";
+
 export type SmartDevice = {
   id: string;
   name: string;
@@ -19,6 +28,8 @@ export type SmartDevice = {
   ip: string;
   protocol: "mdns" | "ssdp" | "cast" | "manual";
   paired: boolean;
+  /** Set by discovery; older saved devices may omit (we probe at command time). */
+  vendor?: SmartDeviceVendor;
 };
 
 export type PairingState = "idle" | "pairing" | "paired" | "failed";

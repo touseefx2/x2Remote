@@ -15,7 +15,17 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ddaniel0711.x2Remote"
+      "bundleIdentifier": "com.ddaniel0711.x2Remote",
+      "infoPlist": {
+        "NSLocalNetworkUsageDescription": "This app discovers TVs and accessories on your Wi‑Fi for smart remote control.",
+        "NSBonjourServices": [
+          "_roku._tcp",
+          "_googlecast._tcp",
+          "_androidtvremote2._tcp",
+          "_airplay._tcp",
+          "_hap._tcp"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +34,11 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": true,
-      "package": "com.ddaniel0711.x2Remote"
+      "package": "com.ddaniel0711.x2Remote",
+      "permissions": [
+        "android.permission.ACCESS_WIFI_STATE",
+        "android.permission.CHANGE_WIFI_MULTICAST_STATE"
+      ]
     },
     "web": {
       "output": "static",
@@ -33,6 +47,14 @@
     "plugins": [
       "expo-router",
       "./plugins/withIRModule",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
       [
         "expo-splash-screen",
         {

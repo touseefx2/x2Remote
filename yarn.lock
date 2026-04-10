@@ -1165,6 +1165,11 @@
   resolved "https://registry.npmjs.org/@expo/schema-utils/-/schema-utils-0.1.8.tgz"
   integrity sha512-9I6ZqvnAvKKDiO+ZF8BpQQFYWXOJvTAL5L/227RUbWG1OVZDInFifzCBiqAZ3b67NRfeAgpgvbA7rejsqhY62A==
 
+"@expo/schema-utils@^55.0.3":
+  version "55.0.3"
+  resolved "https://registry.yarnpkg.com/@expo/schema-utils/-/schema-utils-55.0.3.tgz#4d976417bb659b6185a28e6174192f5b006a1056"
+  integrity sha512-l9KHVjTo6MvoeyvwNr6AjckGJm8NIcqZ3QSAh51cWozXW9v2AUjyCyqYtFtyntLWRZ0x/ByYJishpQo4ZQq45Q==
+
 "@expo/sdk-runtime-versions@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@expo/sdk-runtime-versions/-/sdk-runtime-versions-1.0.0.tgz"
@@ -3429,6 +3434,11 @@ event-target-shim@^5.0.0:
   resolved "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
+events@^3.0.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
+  integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
+
 expo-asset@~12.0.12:
   version "12.0.12"
   resolved "https://registry.npmjs.org/expo-asset/-/expo-asset-12.0.12.tgz"
@@ -3436,6 +3446,15 @@ expo-asset@~12.0.12:
   dependencies:
     "@expo/image-utils" "^0.8.8"
     expo-constants "~18.0.12"
+
+expo-build-properties@^55.0.13:
+  version "55.0.13"
+  resolved "https://registry.yarnpkg.com/expo-build-properties/-/expo-build-properties-55.0.13.tgz#e44247a14424fa7a1597f29f99cd84a69c25385b"
+  integrity sha512-UYZhUKyh7YQhbJdkBvo68WUQ7fOtZeSV7F8kfYkjEiN/ADRHG0WfEIiddvGfi9cH/5iwpptv/+Lu5cx6uvfegA==
+  dependencies:
+    "@expo/schema-utils" "^55.0.3"
+    resolve-from "^5.0.0"
+    semver "^7.6.0"
 
 expo-constants@~18.0.12, expo-constants@~18.0.13:
   version "18.0.13"
@@ -3478,6 +3497,9 @@ expo-image@~3.0.11:
   version "3.0.11"
   resolved "https://registry.npmjs.org/expo-image/-/expo-image-3.0.11.tgz"
   integrity sha512-4TudfUCLgYgENv+f48omnU8tjS2S0Pd9EaON5/s1ZUBRwZ7K8acEr4NfvLPSaeXvxW24iLAiyQ7sV7BXQH3RoA==
+
+"expo-ir@file:./modules/expo-ir":
+  version "1.0.0"
 
 expo-json-utils@~0.15.0:
   version "0.15.0"
@@ -5658,6 +5680,13 @@ react-native-worklets@0.5.1:
     "@babel/preset-typescript" "^7.16.7"
     convert-source-map "^2.0.0"
     semver "7.7.2"
+
+react-native-zeroconf@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-zeroconf/-/react-native-zeroconf-0.14.0.tgz#7d2b8b446ebf1fa4073b539ef01f88e5bef61cb9"
+  integrity sha512-TqjORroaVZrBYLzk3YtviQy8lUl/iiMacknxixRYlmGaqgsv4LJXIYafpnvPa3y2SC4/qu2mvF8D1/VTTxylgQ==
+  dependencies:
+    events "^3.0.0"
 
 react-native@0.81.5:
   version "0.81.5"

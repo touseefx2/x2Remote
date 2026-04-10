@@ -3,27 +3,42 @@ import { ACControlPanel } from "@/src/components/ACControlPanel";
 import { RemoteButton } from "@/src/components/RemoteButton";
 import { moderateHeightScale, moderateWidthScale } from "@/src/config/dimensions";
 import { fontSize, fonts } from "@/src/config/fonts";
+import { useSmartControlTargets } from "@/src/hooks/useSmartControlTargets";
 import { useI18n } from "@/src/i18n/I18nContext";
 import { irService } from "@/src/services/irService";
-import { useDeviceDiscovery } from "@/src/hooks/useDeviceDiscovery";
 import { smartDeviceService } from "@/src/services/smartDeviceService";
+import type { IRCapability } from "@/src/types/remote";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 export function UniversalRemoteScreen() {
   const { t } = useI18n();
   const { colors } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
-  const { devices } = useDeviceDiscovery();
-  const [irSupported, setIrSupported] = useState(false);
+  const { preferredNetworkTv, networkTvs } = useSmartControlTargets();
+  const [irCap, setIrCap] = useState<IRCapability | null>(null);
 
   useEffect(() => {
-    void irService.getCapability().then((value) => setIrSupported(value.supported));
+    void irService.getCapability().then(setIrCap);
   }, []);
 
-  const firstDevice = devices[0];
+  const irReady = irCap?.supported === true;
+  const tvDisabled = !preferredNetworkTv && !irReady;
+
+  const sendUniversalTv = useCallback(
+    async (command: "power" | "volumeUp" | "volumeDown") => {
+      if (preferredNetworkTv) {
+        const ok = await smartDeviceService.sendTvCommand(preferredNetworkTv, command);
+        if (ok) return;
+      }
+      if (irReady) {
+        await irService.sendTvCommand(command);
+      }
+    },
+    [irReady, preferredNetworkTv],
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
@@ -32,40 +47,31 @@ export function UniversalRemoteScreen() {
         <Text style={styles.guideText}>{t("universalGuideStep1")}</Text>
         <Text style={styles.guideText}>{t("universalGuideStep2")}</Text>
         <Text style={styles.guideText}>{t("universalGuideStep3")}</Text>
+        <Text style={styles.guideText}>{t("universalIrBrandHint")}</Text>
       </View>
 
       <View style={styles.card}>
         <Text style={styles.title}>{t("quickTv")}</Text>
+        {preferredNetworkTv ? (
+          <Text style={styles.targetLabel}>
+            {`${preferredNetworkTv.name} (${preferredNetworkTv.vendor ?? preferredNetworkTv.protocol})`}
+          </Text>
+        ) : null}
         <View style={styles.row}>
           <RemoteButton
             label={t("power") as string}
-            onPress={() => {
-              if (irSupported) {
-                void irService.sendTvCommand("power");
-              } else if (firstDevice) {
-                void smartDeviceService.sendTvCommand(firstDevice, "power");
-              }
-            }}
+            disabled={tvDisabled}
+            onPress={() => void sendUniversalTv("power")}
           />
           <RemoteButton
             label={t("volumeUp") as string}
-            onPress={() => {
-              if (irSupported) {
-                void irService.sendTvCommand("volumeUp");
-              } else if (firstDevice) {
-                void smartDeviceService.sendTvCommand(firstDevice, "volumeUp");
-              }
-            }}
+            disabled={tvDisabled}
+            onPress={() => void sendUniversalTv("volumeUp")}
           />
           <RemoteButton
             label={t("volumeDown") as string}
-            onPress={() => {
-              if (irSupported) {
-                void irService.sendTvCommand("volumeDown");
-              } else if (firstDevice) {
-                void smartDeviceService.sendTvCommand(firstDevice, "volumeDown");
-              }
-            }}
+            disabled={tvDisabled}
+            onPress={() => void sendUniversalTv("volumeDown")}
           />
         </View>
       </View>
@@ -74,35 +80,28 @@ export function UniversalRemoteScreen() {
         <Text style={styles.title}>{t("quickAc")}</Text>
         <ACControlPanel
           onPower={() => {
-            if (irSupported) {
-              void irService.sendAcPower();
-            }
+            void irService.sendAcPower();
           }}
           onTempUp={() => {
-            if (irSupported) {
-              void irService.sendAcTemperature(true);
-            }
+            void irService.sendAcTemperature(true);
           }}
           onTempDown={() => {
-            if (irSupported) {
-              void irService.sendAcTemperature(false);
-            }
+            void irService.sendAcTemperature(false);
           }}
           onModeChange={(mode) => {
-            if (irSupported) {
-              void irService.sendAcMode(mode);
-            }
+            void irService.sendAcMode(mode);
           }}
           onFanSpeed={(speed) => {
-            if (irSupported) {
-              void irService.sendAcFanSpeed(speed);
-            }
+            void irService.sendAcFanSpeed(speed);
           }}
-          disabled={!irSupported}
+          disabled={!irReady}
         />
       </View>
 
-      {!firstDevice ? <Text style={styles.empty}>{t("noDevicesFound")}</Text> : null}
+      {networkTvs.length === 0 ? (
+        <Text style={styles.empty}>{t("universalNoNetworkTv")}</Text>
+      ) : null}
+      {!irReady && irCap?.message ? <Text style={styles.empty}>{irCap.message}</Text> : null}
     </ScrollView>
   );
 }
@@ -126,6 +125,12 @@ const createStyles = (colors: Theme) =>
       fontFamily: fonts.fontSemiBold,
       fontSize: fontSize.size15,
       color: colors.text,
+    },
+    targetLabel: {
+      fontFamily: fonts.fontMedium,
+      fontSize: fontSize.size12,
+      color: colors.text,
+      opacity: 0.75,
     },
     row: {
       flexDirection: "row",
