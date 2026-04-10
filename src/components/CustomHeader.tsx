@@ -1,5 +1,6 @@
 import { HeaderControls } from "@/src/components/HeaderControls";
 import {
+  iconScale,
   moderateHeightScale,
   moderateWidthScale,
 } from "@/src/config/dimensions";
@@ -52,8 +53,8 @@ const createStyles = (colors: Theme, topInset: number) =>
       gap: moderateWidthScale(8),
     },
     logo: {
-      width: moderateWidthScale(30),
-      height: moderateHeightScale(30),
+      width: iconScale(30),
+      height: iconScale(30),
     },
     title: {
       fontFamily: fonts.fontSemiBold,
