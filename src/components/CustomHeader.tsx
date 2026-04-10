@@ -1,8 +1,5 @@
 import { HeaderControls } from "@/src/components/HeaderControls";
-import {
-  moderateHeightScale,
-  moderateWidthScale,
-} from "@/src/config/dimensions";
+import { iconScale, moderateWidthScale } from "@/src/config/dimensions";
 import { useAppTheme } from "@/src/theme/ThemeContext";
 import { type Theme } from "@/src/theme/themes";
 import { useMemo } from "react";
@@ -47,8 +44,8 @@ const createStyles = (colors: Theme, topInset: number, isRTL: boolean) =>
       alignSelf: "flex-end",
     },
     logo: {
-      width: moderateWidthScale(70),
-      height: moderateHeightScale(60),
+      width: iconScale(70),
+      height: iconScale(60),
       position: "absolute",
       top: topInset,
       left: moderateWidthScale(isRTL ? 0 : 12),
