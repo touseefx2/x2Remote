@@ -12,13 +12,14 @@ export default function TabsLayout() {
   const { colors } = useAppTheme();
   const { t } = useI18n();
   const insets = useSafeAreaInsets();
+
   const tabBarStyle = useMemo(
     () => ({
       backgroundColor: colors.card,
       borderTopColor: colors.borderLine,
       borderTopWidth: StyleSheet.hairlineWidth,
-      paddingTop: moderateHeightScale(6),
-      paddingBottom: Math.max(insets.bottom, moderateHeightScale(10)),
+      // Do not set paddingBottom here: BottomTabBar already applies paddingBottom from
+      // safe-area insets; overriding it breaks height math and clips labels on Android.
       ...Platform.select({
         ios: {
           shadowColor: colors.shadow,
@@ -29,22 +30,26 @@ export default function TabsLayout() {
         android: { elevation: 12 },
       }),
     }),
-    [colors.borderLine, colors.card, colors.shadow, insets.bottom],
+    [colors.borderLine, colors.card, colors.shadow],
   );
 
   return (
     <Tabs
+      safeAreaInsets={{
+        bottom:
+          Platform.OS === "android"
+            ? moderateHeightScale(insets.bottom > 0 ? 48 : 25)
+            : insets.bottom,
+      }}
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.text,
+        tabBarInactiveTintColor: colors.subText,
         tabBarStyle,
         tabBarLabelStyle: {
           fontFamily: fonts.fontSemiBold,
           fontSize: fontSize.size11,
-          marginBottom: moderateHeightScale(2),
         },
-        tabBarIconStyle: { marginTop: moderateHeightScale(4) },
       }}
     >
       <Tabs.Screen
@@ -52,7 +57,11 @@ export default function TabsLayout() {
         options={{
           title: t("irRemote") as string,
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="remote" size={size ?? 22} color={color} />
+            <MaterialCommunityIcons
+              name="remote"
+              size={size ?? 22}
+              color={color}
+            />
           ),
         }}
       />

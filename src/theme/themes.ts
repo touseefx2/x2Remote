@@ -1,6 +1,7 @@
 export type Theme = {
   background: string;
   text: string;
+  subText: string;
   textOnPrimary: string;
   primary: string;
   borderLine: string;
@@ -13,6 +14,7 @@ export const themes: Record<"light" | "dark" | "emerald", Theme> = {
   light: {
     background: "#FFFFFF",
     text: "#111111",
+    subText: "#666666",
     textOnPrimary: "#FFFFFF",
     primary: "#365AB8",
     borderLine: "#D1D5DB",
@@ -23,6 +25,7 @@ export const themes: Record<"light" | "dark" | "emerald", Theme> = {
   dark: {
     background: "#000000",
     text: "#F8FAFC",
+    subText: "#9CA3AF",
     textOnPrimary: "#FFFFFF",
     primary: "#60A5FA",
     borderLine: "#1F2937",
@@ -33,6 +36,7 @@ export const themes: Record<"light" | "dark" | "emerald", Theme> = {
   emerald: {
     background: "#001A14",
     text: "#F0FFF9",
+    subText: "#9CA3AF",
     textOnPrimary: "#FFFFFF",
     primary: "#006B63",
     borderLine: "#0D3D36",
