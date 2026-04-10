@@ -31,13 +31,13 @@ export const themes: Record<"light" | "dark" | "emerald", Theme> = {
     shadow: "#000000",
   },
   emerald: {
-    background: "#062C22",
-    text: "#E6FFF7",
+    background: "#001A14",
+    text: "#F0FFF9",
     textOnPrimary: "#FFFFFF",
-    primary: "#0F766E",
-    borderLine: "#115E59",
+    primary: "#006B63",
+    borderLine: "#0D3D36",
     icon: "#E6FFF7",
-    card: "#0A3B2F",
+    card: "#002B24",
     shadow: "#000000",
   },
 };
