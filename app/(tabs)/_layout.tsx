@@ -1,4 +1,4 @@
-import { moderateHeightScale } from "@/src/config/dimensions";
+import { iconScale, moderateHeightScale } from "@/src/config/dimensions";
 import { fontSize, fonts } from "@/src/config/fonts";
 import { useI18n } from "@/src/i18n/I18nContext";
 import { useAppTheme } from "@/src/theme/ThemeContext";
@@ -59,7 +59,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="remote"
-              size={size ?? 22}
+              size={iconScale(22)}
               color={color}
             />
           ),
@@ -72,7 +72,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="devices"
-              size={size ?? 22}
+              size={iconScale(22)}
               color={color}
             />
           ),
@@ -85,7 +85,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="gesture-tap"
-              size={size ?? 22}
+              size={iconScale(22)}
               color={color}
             />
           ),
