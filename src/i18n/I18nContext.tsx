@@ -4,7 +4,6 @@ import {
   type AppLanguage,
 } from "@/src/i18n/translations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Updates from "expo-updates";
 import {
   createContext,
   useCallback,
@@ -72,15 +71,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
       setLanguage(nextLanguage);
       await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage);
-
-      const directionChanged = applyLanguageDirection(nextLanguage);
-      if (directionChanged) {
-        try {
-          await Updates.reloadAsync();
-        } catch {
-          // Keep language persisted even if runtime reload is unavailable.
-        }
-      }
+      applyLanguageDirection(nextLanguage);
     },
     [applyLanguageDirection, language],
   );
