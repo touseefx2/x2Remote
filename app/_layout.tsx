@@ -26,10 +26,16 @@ function AppNavigator() {
     }
   }, [isReady]);
 
-  if (!isReady) return null;
+  if (!isReady) return <View style={{ flex: 1, backgroundColor: colors.background}} />;
 
   return (
-    <View style={{ flex: 1, direction: isRTL ? "rtl" : "ltr" }}>
+    <View
+      style={{
+        flex: 1,
+        direction: isRTL ? "rtl" : "ltr",
+        backgroundColor: colors.background,
+      }}
+    >
       <StatusBar
         style={mode === "dark" || mode === "emerald" ? "light" : "dark"}
       />
